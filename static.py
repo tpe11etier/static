@@ -1,15 +1,6 @@
 #!/usr/bin/env python
 
-import sys
-import csv
-import xlrd
-import os
-import shutil
-import commands
-import re
-import smtplib
-import socket
-import time
+import sys, csv, xlrd, os, shutil, commands, re, socket, time, getpass
 import urllib, urllib2, cookielib, MultipartPostHandler, httplib
 from BeautifulSoup import BeautifulSoup
 
@@ -101,7 +92,7 @@ def zip(paths, zipfile):
 def authenticate():
     url = 'https://tools.varolii.com/'
     username = raw_input('Please enter Username: ')
-    password = raw_input('Please enter Password: ')
+    password = getpass.getpass('Please enter Password: ')
     cj = cookielib.CookieJar()
     ck = cookielib.Cookie(version=0, name='killmenothing', value='', port=None, port_specified=False, domain='tools.varolii.com', domain_specified=False, domain_initial_dot=False, path='/', path_specified=True, secure=False, expires=None, discard=True, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False)
     cj.set_cookie(ck)
