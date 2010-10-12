@@ -27,6 +27,7 @@ def readfile(filename):
     sh = book.sheet_by_index(0) 
     for rx in range(sh.nrows):
         writer.writerow((sh.row_values(rx)))
+    writer.close()
         
 def clientlist():
     soup = BeautifulSoup(result)
@@ -59,6 +60,7 @@ def controlfile():
         file.write('vocab = ' + talents[talent])
         file.write('plural = N\n')
         file.write('type = STATIC\n')
+        file.close
     except (KeyError):
         print "Voice Talent does not exist.\n"
         main()
@@ -81,7 +83,13 @@ def getfiles():
 def zip(paths, zipfile):
   """Zip up all of the given files into a new zip file with the given name."""
   cmd = 'zip -j ' + zipfile + ' ' + 'prompts.csv' + ' ' +  ' ' + 'control.txt' + ' ' + ' '.join(paths) 
-  print "Command I'm going to do: " + cmd 
+  #print "Command I'm going to do: " + cmd
+  print '========================================='
+  print 'Zipping up the following files: '
+  print 'prompts.csv'
+  print 'control.txt'
+  for path in paths:
+    print path
   (status, output) = commands.getstatusoutput(cmd)
   # If command had a problem (status is non-zero),
   # print its output to stderr and exit.
@@ -97,6 +105,7 @@ def authenticate():
     ck = cookielib.Cookie(version=0, name='killmenothing', value='', port=None, port_specified=False, domain='tools.varolii.com', domain_specified=False, domain_initial_dot=False, path='/', path_specified=True, secure=False, expires=None, discard=True, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False)
     cj.set_cookie(ck)
     
+
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler, urllib2.HTTPCookieProcessor(cj))
     login_data = urllib.urlencode({'frmUserID' : username, 'frmPassword' : password, 'formAction' : 'login'})
     opener.open(url + 'admin_login_page.jsp')
