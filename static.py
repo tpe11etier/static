@@ -40,8 +40,8 @@ def clientlist():
     
       
 def controlfile():
-    '''Writes out a text file that handle how the prompts should be processed and with which voice talent.
-       I only have Dynamic prompts built in at this time.'''
+    '''Writes out a text file that handle how the prompts should be processed and with which voice talent.'''
+
        
     talents = {'Leslie' : 'F_ENG_4\n',
                'Krisha' : 'F_ENG_5\n',
