@@ -9,7 +9,7 @@ from BeautifulSoup import BeautifulSoup
 def main():
     if len(sys.argv) <= 2:
         print 'You must pass in two filenames.  First one is the Prompt Sheet xls, second one is the output zip file.'
-        print 'eg. ./dynamic.py voice_prompts.xls voice_prompts.zip'
+        print 'eg. ./static.py voice_prompts.xls voice_prompts.zip'
         sys.exit(1)
     else:
         listdata = readfile(sys.argv[1])
@@ -27,7 +27,6 @@ def readfile(filename):
     sh = book.sheet_by_index(0) 
     for rx in range(sh.nrows):
         writer.writerow((sh.row_values(rx)))
-    writer.close()
         
 def clientlist():
     soup = BeautifulSoup(result)
@@ -45,6 +44,9 @@ def controlfile():
        I only have Dynamic prompts built in at this time.'''
        
     talents = {'Leslie' : 'F_ENG_4\n',
+               'Krisha' : 'F_ENG_5\n',
+               'Jen' : 'F_ENG_6\n',
+               'Sneha' : 'F_ENG_7\n',
                 'Maru' : 'F_ESP_4\n',
                'Dave' : 'M_ENG_4\n',
                'Fabio' : 'M_ESP_3\n',
