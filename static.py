@@ -28,17 +28,7 @@ def readfile(filename):
     for rx in range(sh.nrows):
         writer.writerow((sh.row_values(rx)))
         
-def clientlist():
-    soup = BeautifulSoup(result)
-    option_dict = {}
-    table = soup.find("select", {"name" : "ahClientList"})
-    for row in table.findChildren('option')[1:]:
-        option_dict[row.get('value')] = row
-    for k, v in option_dict.items():
-        options = '%s, %s' % (k, v.contents)
-    return options
-    
-      
+     
 def controlfile():
     '''Writes out a text file that handle how the prompts should be processed and with which voice talent.'''
 
