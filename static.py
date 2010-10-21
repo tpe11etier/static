@@ -129,14 +129,14 @@ def authenticate():
         print 'You must enter a client ID. Exiting.'
         sys.exit(1)
     else:
-        resp = opener.open('https://tools.varolii.com/change_client_db.jsp?clientNum=' + client + '&GlobalSessionToken=' + sessiontoken)
+        opener.open('https://tools.varolii.com/change_client_db.jsp?clientNum=' + client + '&GlobalSessionToken=' + sessiontoken)
     return opener
    
 def upload(opener, zipfile):
     uploadparams = {'uploadFileName':open(zipfile, 'rb')}
     urllib2.install_opener(opener)
     req = urllib2.Request('https://tools.varolii.com/VoicePromptBatchUploadServlet', uploadparams)
-    response = urllib2.urlopen(req).read().strip()
+    urllib2.urlopen(req).read().strip()
     results = urllib2.urlopen('https://tools.varolii.com/voice_batch_upload_viewer.jsp')
     uploadresult = results.read()
     print uploadresult
@@ -145,6 +145,6 @@ def upload(opener, zipfile):
     uploadresult = results.read()
     print uploadresult
 
-      
+
 if __name__ == '__main__':
     main()
