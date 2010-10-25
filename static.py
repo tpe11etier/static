@@ -4,7 +4,7 @@ import sys, csv, xlrd, os, shutil, commands, re, socket, time, getpass
 import urllib, urllib2, cookielib, MultipartPostHandler, httplib
 from BeautifulSoup import BeautifulSoup
 
-
+url = 'https://tools.varolii.com/'
 
 def main():
     if len(sys.argv) <= 2:
@@ -90,7 +90,6 @@ def zip(paths, zipfile):
     sys.exit(1)
     
 def authenticate():
-    url = 'https://tools.varolii.com/'
     username = raw_input('Please enter Username: ')
     password = getpass.getpass('Please enter Password: ')
     cj = cookielib.CookieJar()
@@ -101,7 +100,7 @@ def authenticate():
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler, urllib2.HTTPCookieProcessor(cj))
     login_data = urllib.urlencode({'frmUserID' : username, 'frmPassword' : password, 'formAction' : 'login'})
     opener.open(url + 'admin_login_page.jsp')
-    resp = opener.open('https://tools.varolii.com/AdminLoginServlet', login_data)
+    resp = opener.open(url + 'AdminLoginServlet', login_data)
     result = resp.read()
     match = (re.search(r'escape\(".*"\)', result))
     if match is not None:
@@ -111,7 +110,7 @@ def authenticate():
         sys.exit(1)
     sessiontoken = validmatch[8:40]
     
-    resp = opener.open('https://tools.varolii.com/change_role_db.jsp?roleNum=2&GlobalSessionToken=' + sessiontoken)
+    resp = opener.open(url + 'change_role_db.jsp?roleNum=2&GlobalSessionToken=' + sessiontoken)
     
     result = resp.read()
     
@@ -129,19 +128,19 @@ def authenticate():
         print 'You must enter a client ID. Exiting.'
         sys.exit(1)
     else:
-        opener.open('https://tools.varolii.com/change_client_db.jsp?clientNum=' + client + '&GlobalSessionToken=' + sessiontoken)
+        opener.open(url + 'change_client_db.jsp?clientNum=' + client + '&GlobalSessionToken=' + sessiontoken)
     return opener
    
 def upload(opener, zipfile):
     uploadparams = {'uploadFileName':open(zipfile, 'rb')}
     urllib2.install_opener(opener)
-    req = urllib2.Request('https://tools.varolii.com/VoicePromptBatchUploadServlet', uploadparams)
+    req = urllib2.Request(url + 'VoicePromptBatchUploadServlet', uploadparams)
     urllib2.urlopen(req).read().strip()
-    results = urllib2.urlopen('https://tools.varolii.com/voice_batch_upload_viewer.jsp')
+    results = urllib2.urlopen(url + 'voice_batch_upload_viewer.jsp')
     uploadresult = results.read()
     print uploadresult
     time.sleep(20)
-    results = urllib2.urlopen('https://tools.varolii.com/voice_batch_upload_viewer.jsp')
+    results = urllib2.urlopen(url + 'voice_batch_upload_viewer.jsp')
     uploadresult = results.read()
     print uploadresult
 
